@@ -19,8 +19,6 @@ request(url, (error, response, body) => {
         }
       }
     }
-    for (const userId in completedTasks) {
-      console.log(`${userId}: ${completedTasks[userId]}`);
-    }
+    console.log(completedTasks);
   }
 });
