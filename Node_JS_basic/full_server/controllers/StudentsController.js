@@ -2,7 +2,7 @@ const readDatabase = require("../utils");
 
 class StudentsController {
   static getAllStudents(req, res) {
-    readDatabase("./database.csv")
+    readDatabase(process.argv[2])
       .then((data) => {
         let output = "This is the list of our students\n";
         const fields = Object.keys(data).sort((a, b) =>
