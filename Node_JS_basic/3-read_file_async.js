@@ -1,32 +1,31 @@
-const fs = require('fs');
+const fs = require("fs");
 
 function countStudents(path) {
   return fs.promises
-    .readFile(path, 'utf8')
+    .readFile(path, "utf8")
     .then((data) => {
-      const lines = data.split('\n');
-      const students = lines.slice(1, lines.length - 1);
-      console.log(`Number of students: ${students.length}`);
+      const lines = data.split("\n");
+      const students = lines.slice(1).filter((line) => line.length > 0); // filter out empty lines
+      let output = `Number of students: ${students.length}\n`;
       const fields = {};
       for (const student of students) {
-        const field = student.split(',')[3];
+        const field = student.split(",")[3];
         if (!fields[field]) {
           fields[field] = [];
         }
-        fields[field].push(student.split(',')[0]);
+        fields[field].push(student.split(",")[0]);
       }
       for (const field in fields) {
         if (Object.prototype.hasOwnProperty.call(fields, field)) {
-          console.log(
-            `Number of students in ${field}: ${
-              fields[field].length
-            }. List: ${fields[field].join(', ')}`,
-          );
+          output += `Number of students in ${field}: ${
+            fields[field].length
+          }. List: ${fields[field].join(", ")}\n`;
         }
       }
+      return output;
     })
     .catch(() => {
-      throw new Error('Cannot load the database');
+      throw new Error("Cannot load the database");
     });
 }
 
